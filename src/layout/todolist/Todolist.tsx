@@ -11,10 +11,10 @@ export type TaskType = {
   isDone: boolean;
 };
 
-const Todolist: FC<TodolistProps> = (props) => {
+const Todolist = (props: TodolistProps) => {
   const tasksElements = props.tasks.map((task) => {
     return (
-      <li>
+      <li key={task.id}>
         <input type="checkbox" checked={task.isDone} />
         <span>{task.title}</span>
       </li>
@@ -28,7 +28,7 @@ const Todolist: FC<TodolistProps> = (props) => {
         <input />
         <button>+</button>
       </div>
-      <ul>{tasksElements}</ul>
+      {props.tasks.length ? <ul>{tasksElements}</ul> : "Тасок нет"}
       <div>
         <button>All</button>
         <button>Active</button>
