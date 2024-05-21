@@ -1,22 +1,38 @@
 import { FC } from "react";
 
-interface TodolistProps {
+export interface TodolistProps {
   title: string;
-  subTitle: string;
-  description: string;
-  tasks: { id: number; title: string; isDone: boolean }[];
+  tasks: TaskType[];
 }
 
-const Todolist = (props: TodolistProps) => {
+export type TaskType = {
+  id: number;
+  title: string;
+  isDone: boolean;
+};
+
+const Todolist: FC<TodolistProps> = (props) => {
+  const tasksElements = props.tasks.map((task) => {
+    return (
+      <li>
+        <input type="checkbox" checked={task.isDone} />
+        <span>{task.title}</span>
+      </li>
+    );
+  });
+
   return (
-    <div>
+    <div className="todolist">
       <h3>{props.title}</h3>
-      <h4>{props.subTitle}</h4>
-      <p>{props.description}</p>
       <div>
-        {props.tasks.map((t) => (
-          <div>{t.title}</div>
-        ))}
+        <input />
+        <button>+</button>
+      </div>
+      <ul>{tasksElements}</ul>
+      <div>
+        <button>All</button>
+        <button>Active</button>
+        <button>Completed</button>
       </div>
     </div>
   );

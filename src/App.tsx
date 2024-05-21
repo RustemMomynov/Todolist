@@ -1,28 +1,17 @@
 import "./App.css";
-import Todolist from "./layout/todolist/Todolist";
+import Todolist, { TaskType } from "./layout/todolist/Todolist";
 
 function App() {
-  const tasks1 = [
-    { id: 1, title: "HTML&CSS", isDone: true },
-    { id: 2, title: "JS", isDone: true },
-    { id: 3, title: "ReactJS", isDone: false },
-  ];
-
-  const tasks2 = [
-    { id: 1, title: "Hello world", isDone: true },
-    { id: 2, title: "I am Happy", isDone: false },
-    { id: 3, title: "Yo", isDone: false },
+  const tasks: TaskType[] = [
+    { id: 1, title: "HTML", isDone: true },
+    { id: 2, title: "CSS", isDone: true },
+    { id: 3, title: "JS/TS", isDone: false },
+    { id: 4, title: "REACT", isDone: false },
   ];
 
   return (
     <div className="App">
-      <Todolist
-        title="What to learn"
-        tasks={tasks1}
-        description="1"
-        subTitle="2"
-      />
-      <Todolist title="Songs" tasks={tasks2} description="1" subTitle="2" />
+      <Todolist title="What to learn" tasks={tasks} />
     </div>
   );
 }
