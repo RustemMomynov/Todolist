@@ -1,8 +1,11 @@
 import { FC } from "react";
+import { FilterValueType } from "../../App";
 
 export interface TodolistProps {
   title: string;
   tasks: TaskType[];
+  deleteTask: (id: number) => void;
+  changeFilter: (value: FilterValueType) => void;
 }
 
 export type TaskType = {
@@ -12,11 +15,18 @@ export type TaskType = {
 };
 
 const Todolist = (props: TodolistProps) => {
-  const tasksElements = props.tasks.map((task) => {
+  const tasksElements = props.tasks.map((task, index) => {
     return (
       <li key={task.id}>
         <input type="checkbox" checked={task.isDone} />
         <span>{task.title}</span>
+        <button
+          onClick={() => {
+            props.deleteTask(task.id);
+          }}
+        >
+          X
+        </button>
       </li>
     );
   });
@@ -30,9 +40,27 @@ const Todolist = (props: TodolistProps) => {
       </div>
       {props.tasks.length ? <ul>{tasksElements}</ul> : "Тасок нет"}
       <div>
-        <button>All</button>
-        <button>Active</button>
-        <button>Completed</button>
+        <button
+          onClick={() => {
+            props.changeFilter("all");
+          }}
+        >
+          All
+        </button>
+        <button
+          onClick={() => {
+            props.changeFilter("active");
+          }}
+        >
+          Active
+        </button>
+        <button
+          onClick={() => {
+            props.changeFilter("completed");
+          }}
+        >
+          Completed
+        </button>
       </div>
     </div>
   );
