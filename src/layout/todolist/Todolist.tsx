@@ -1,20 +1,36 @@
-import { FC } from "react";
+import { FC, useRef, useState } from "react";
 import { FilterValueType } from "../../App";
+import { v1 } from "uuid";
 
 export interface TodolistProps {
   title: string;
   tasks: TaskType[];
-  deleteTask: (id: number) => void;
+  deleteTask: (id: string) => void;
   changeFilter: (value: FilterValueType) => void;
+  addNewTask: (newTask: TaskType) => void;
 }
 
 export type TaskType = {
-  id: number;
+  id: string;
   title: string;
   isDone: boolean;
 };
 
 const Todolist = (props: TodolistProps) => {
+  const [newTaskTitle, setNewTaskTitle] = useState("");
+
+  const handleInputChange = (e: any) => {
+    setNewTaskTitle(e.target.value);
+  };
+
+  const createNewTask = (e: any) => {
+    e.preventDefault();
+    if (newTaskTitle) {
+      props.addNewTask({ id: v1(), title: newTaskTitle, isDone: false });
+      setNewTaskTitle("");
+    } else alert("Напишите название задачи");
+  };
+
   const tasksElements = props.tasks.map((task, index) => {
     return (
       <li key={task.id}>
@@ -35,8 +51,19 @@ const Todolist = (props: TodolistProps) => {
     <div className="todolist">
       <h3>{props.title}</h3>
       <div>
-        <input />
-        <button>+</button>
+        <form action="">
+          <input
+            type="text"
+            value={newTaskTitle}
+            onChange={handleInputChange}
+            onKeyDown={(e) => {
+              if (e.charCode === 13) {
+                createNewTask(e);
+              }
+            }}
+          />
+          <button onClick={createNewTask}>+</button>
+        </form>
       </div>
       {props.tasks.length ? <ul>{tasksElements}</ul> : "Тасок нет"}
       <div>
